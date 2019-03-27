@@ -291,13 +291,13 @@ sub open_session {
 	my ($db, $session_id) = @_;
 
 	if (!exists($session_dbh{$db})) {
-		$session_dbh{$db} = DBI->connect("dbi:SQLite:$db",'','', { AutoCommit => 0 }) or
+		$session_dbh{$db} = DBI->connect("dbi:SQLite:$db",'','', { AutoCommit => 1 }) or
 			return "DBI connection failed - $DBI::errstr";
 	}
 
 	my %session;
 	eval { tie(%session, 'Apache::Session::Browseable::SQLite', $session_id,
-		    { Handle => $session_dbh{$db}, Commit => 1 }); };
+		    { Handle => $session_dbh{$db}, Commit => 0 }); };
 
 	return $@ ? $@ : \%session;
 }
