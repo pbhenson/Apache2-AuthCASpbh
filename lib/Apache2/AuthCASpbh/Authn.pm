@@ -22,7 +22,7 @@ use LWP::UserAgent qw ();
 use Storable qw();
 use XML::Simple qw();
 
-our $VERSION = '0.10';
+our $VERSION = '0.20';
 
 sub handler {
 	my ($r) = shift;

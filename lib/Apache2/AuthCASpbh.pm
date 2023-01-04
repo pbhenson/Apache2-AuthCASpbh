@@ -15,7 +15,7 @@ use Apache2::ServerUtil qw();
 use Apache::Session::Browseable::SQLite qw();
 use Storable qw();
 
-our $VERSION = '0.10';
+our $VERSION = '0.20';
 
 my %session_dbh;
 
