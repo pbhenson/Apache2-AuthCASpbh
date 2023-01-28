@@ -393,11 +393,14 @@ sub cleanup {
 				if (ref($session)) {
 					eval { tied(%{$session})->delete; };
 					if ($@) {
-			    			$_log->l('warn', "session delete failed for $_ - $@");
+						$_log->l('warn', "cleanup session delete failed for $_ - $@");
 					}
 				}
+				elsif ($session !~ /Object does not exist in the data store/) {
+					$_log->l('warn', "cleanup session tie failed for $_ - $session");
+				}
 				else {
-			    		$_log->l('warn', "session tie failed for $_ - $session");
+					$_log->l('debug', "cleanup session tie $_ not found");
 				}
 			}
 		}
