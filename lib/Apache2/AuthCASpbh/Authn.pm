@@ -61,7 +61,7 @@ sub handler {
 		my $session = open_session($session_db, $cookies{$cookie_name}->value());
 
 		if (ref($session)) {
-			if ($session->{expiration} > $now) {
+			if (defined($session->{expiration}) && $session->{expiration} > $now) {
 				$_log->l($debug_level, 'valid cookie for ' . $session->{user} .
 					 ' expires ' . $session->{expiration});
 				$r->user($session->{user});
@@ -92,8 +92,8 @@ sub handler {
 				return Apache2::Const::OK;
 			}
 			else {
-				$_log->l($debug_level, 'cookie for ' . $session->{user} .
-					 ' expired ' . $session->{expiration});
+				$_log->l($debug_level, 'cookie for ' . ($session->{user} // '<missing>') .
+					 ' expired ' . ($session->{expiration} // '<missing>'));
 
 				eval { tied(%{$session})->delete; };
 				if ($@) {
