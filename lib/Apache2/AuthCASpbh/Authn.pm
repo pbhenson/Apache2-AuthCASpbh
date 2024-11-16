@@ -188,7 +188,7 @@ sub handler {
 
 					if (!_allowed_proxy($_log, $debug_level, $cas_proxy,
 							    $proxy_allow, $proxy_allow_re)) {
-			    			$_log->l($debug_level, 'proxy chain (' .
+						$_log->l('notice', 'proxy chain (' .
 								       join(' ', @{$cas_proxy}) .
 								       ') not permitted');
 						return Apache2::Const::FORBIDDEN;
@@ -199,7 +199,7 @@ sub handler {
 					$r->pnotes(cas_proxy => $cas_proxy);
 				}
 				elsif (cfg_value($dir_cfg, 'ProxyRequired')) {
-			    		$_log->l($debug_level, 'proxy chain not found in response');
+					$_log->l('notice', 'proxy chain not found in response');
 					return Apache2::Const::FORBIDDEN;
 				}
 			}
